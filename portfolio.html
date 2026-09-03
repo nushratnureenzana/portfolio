@@ -1,196 +1,556 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nushrat Nureen | Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nushrat Nureen | Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16233A;
+    --navy-deep:#0C1420;
+    --teal:#2F6E6A;
+    --amber:#C98A2C;
+    --paper:#FAF8F3;
+    --surface:#FFFFFF;
+    --line:#E3DFD3;
+    --ink:#22303F;
+    --ink-soft:#5B6672;
+    --radius:6px;
+    --maxw:980px;
+  }
+  [data-theme="dark"]{
+    --paper:#0F1720;
+    --surface:#16212C;
+    --line:#28343F;
+    --ink:#E8E9E4;
+    --ink-soft:#A6AEB6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    transition:background .3s ease, color .3s ease;
+  }
+  h1,h2,h3{
+    font-family:'Source Serif 4', Georgia, serif;
+    font-weight:600;
+    color:var(--ink);
+    margin:0 0 .4em;
+  }
+  a{color:var(--teal); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding-left:28px; padding-right:28px;}
+
+  header.site-nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,248,243,.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  [data-theme="dark"] header.site-nav{background:rgba(15,23,32,.88);}
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-name{font-family:'Source Serif 4',serif; font-weight:600; font-size:1.05rem;}
+  .nav-links{display:flex; gap:22px; align-items:center;}
+  .nav-links a{color:var(--ink-soft); font-size:.92rem; font-weight:500;}
+  .nav-links a:hover{color:var(--teal); text-decoration:none;}
+  .theme-toggle{
+    border:1px solid var(--line); background:var(--surface); color:var(--ink);
+    width:32px; height:32px; border-radius:50%; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; font-size:15px;
+  }
+  .nav-toggle{display:none; background:none; border:none; font-size:1.4rem; color:var(--ink); cursor:pointer;}
+
+  .hero{
+    max-width:var(--maxw); margin:0 auto; padding:64px 28px 0;
+    display:grid; grid-template-columns:1.3fr .8fr; gap:48px; align-items:center;
+  }
+  .kicker{color:var(--teal); font-weight:600; font-size:.85rem; letter-spacing:.02em; margin-bottom:10px;}
+  .hero h1{font-size:2.6rem; line-height:1.1;}
+  .hero p.role{color:var(--ink-soft); font-size:1.08rem; margin:8px 0 18px;}
+  .hero-meta{display:flex; flex-wrap:wrap; gap:14px; font-size:.88rem; color:var(--ink-soft); margin-top:20px;}
+  .hero-meta a{color:var(--ink-soft);}
+  .hero-meta a:hover{color:var(--teal);}
+  .hero-photo-wrap{
+    position:relative; border-radius:var(--radius); overflow:hidden;
+    aspect-ratio:4/5; box-shadow:0 18px 40px -18px rgba(12,20,32,.35);
+  }
+  .hero-photo-wrap img{width:100%; height:100%; object-fit:cover;}
+  .hero-photo-wrap::after{
+    content:""; position:absolute; inset:0;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);
+  }
+
+  .field-strip{max-width:var(--maxw); margin:44px auto 0; padding:0 28px;}
+  .field-strip-grid{
+    display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:10px;
+    border-radius:var(--radius); overflow:hidden;
+  }
+  .field-strip-grid img{width:100%; height:230px; object-fit:cover; transition:transform .5s ease;}
+  .field-strip-grid a{display:block; overflow:hidden; border-radius:var(--radius);}
+  .field-strip-grid a:hover img{transform:scale(1.04);}
+  .field-caption{margin-top:10px; font-size:.82rem; color:var(--ink-soft); text-align:right;}
+
+  section{max-width:var(--maxw); margin:0 auto; padding:56px 28px;}
+  .section-head{
+    display:flex; align-items:baseline; gap:12px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:12px; margin-bottom:30px;
+  }
+  .section-head h2{font-size:1.4rem;}
+  .section-head .num{color:var(--amber); font-family:'Source Serif 4',serif; font-size:1rem;}
+
+  p{color:var(--ink);}
+  p.lede{color:var(--ink-soft); max-width:56ch;}
+
+  .entry{
+    display:grid; grid-template-columns:150px 1fr; gap:24px;
+    padding:20px 0; border-bottom:1px solid var(--line);
+  }
+  .entry:last-child{border-bottom:none;}
+  .entry-date{color:var(--ink-soft); font-size:.85rem; padding-top:2px;}
+  .entry h3{font-size:1.08rem; margin-bottom:2px;}
+  .entry .org{color:var(--teal); font-size:.92rem; font-weight:500; margin-bottom:8px;}
+  .entry ul{margin:8px 0 0; padding-left:18px; color:var(--ink-soft); font-size:.93rem;}
+  .entry ul li{margin-bottom:4px;}
+  .entry .meta-line{font-size:.85rem; color:var(--ink-soft); margin-bottom:6px;}
+
+  .pub-group h3.pub-heading{font-size:1rem; color:var(--ink-soft); font-weight:600; margin:28px 0 12px;}
+  .pub-group h3.pub-heading:first-child{margin-top:0;}
+  .pub-item{padding:15px 0; border-bottom:1px solid var(--line); font-size:.94rem;}
+  .pub-item:last-child{border-bottom:none;}
+  .pub-tag{
+    display:inline-block; border:1px solid var(--teal); color:var(--teal);
+    font-size:.72rem; font-weight:600; padding:2px 8px; border-radius:20px;
+    margin-right:10px; vertical-align:middle;
+  }
+
+  .project{
+    display:grid; grid-template-columns:1fr 1fr; gap:36px;
+    padding:44px 0; border-bottom:1px solid var(--line); align-items:start;
+  }
+  .project:nth-child(even) .project-media{order:2;}
+  .project:last-child{border-bottom:none;}
+  .project-tag{color:var(--teal); font-size:.82rem; font-weight:600; margin-bottom:4px;}
+  .project h3{font-size:1.25rem;}
+  .project ul{margin:12px 0 0; padding-left:18px; color:var(--ink-soft); font-size:.93rem;}
+  .project ul li{margin-bottom:5px;}
+  .project-media{display:grid; gap:8px;}
+  .project-media .cover{
+    width:100%; height:220px; object-fit:cover; border-radius:var(--radius);
+    border:1px solid var(--line);
+  }
+  .project-media .sub-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .project-media .sub-grid img{
+    width:100%; height:100px; object-fit:cover; border-radius:var(--radius);
+    border:1px solid var(--line);
+  }
+
+  .skills-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .skill-block h3{font-size:.85rem; color:var(--teal); font-weight:600; margin-bottom:8px;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{background:var(--surface); border:1px solid var(--line); padding:5px 12px; border-radius:20px; font-size:.83rem; color:var(--ink);}
+
+  .list-simple{list-style:none; margin:0; padding:0;}
+  .list-simple li{
+    padding:12px 0; border-bottom:1px solid var(--line);
+    display:flex; justify-content:space-between; gap:12px; font-size:.94rem;
+  }
+  .list-simple li:last-child{border-bottom:none;}
+  .list-simple .badge-year{color:var(--ink-soft); font-size:.85rem; white-space:nowrap;}
+
+  .contact-box{
+    background:var(--navy); color:#EDEEE9; border-radius:var(--radius); padding:40px;
+    display:grid; gap:18px;
+  }
+  .contact-box h2{color:#fff;}
+  .contact-box .section-head{border-bottom:1px solid rgba(255,255,255,.15); margin-bottom:10px;}
+  .contact-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;
+    border-bottom:1px solid rgba(255,255,255,.1); padding-bottom:12px;}
+  .contact-row:last-of-type{border-bottom:none;}
+  .contact-row .label{color:rgba(237,238,233,.6); font-size:.85rem;}
+  .contact-row a{color:#EDEEE9;}
+  .btn{
+    display:inline-block; background:var(--amber); color:var(--navy-deep) !important;
+    padding:11px 22px; border-radius:20px; font-size:.9rem; font-weight:600;
+    justify-self:start;
+  }
+  .btn:hover{text-decoration:none; opacity:.9;}
+
+  footer{text-align:center; padding:30px 24px 50px; color:var(--ink-soft); font-size:.82rem;}
+
+  @media (max-width:760px){
+    .hero{grid-template-columns:1fr; text-align:left; padding-top:44px;}
+    .hero-photo-wrap{aspect-ratio:16/10; max-width:320px;}
+    .field-strip-grid{grid-template-columns:1fr 1fr;}
+    .field-strip-grid a:first-child{grid-column:1/-1;}
+    .entry{grid-template-columns:1fr;}
+    .entry-date{order:2;}
+    .project, .project:nth-child(even){grid-template-columns:1fr;}
+    .project:nth-child(even) .project-media{order:0;}
+    .skills-grid{grid-template-columns:1fr;}
+    .nav-links{
+      position:fixed; top:57px; left:0; right:0; background:var(--paper);
+      flex-direction:column; align-items:flex-start; padding:16px 28px;
+      border-bottom:1px solid var(--line); display:none; gap:14px;
+    }
+    .nav-links.open{display:flex;}
+    .nav-toggle{display:block;}
+  }
+</style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="nav-container">
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">☀</button>
-            <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="nav-links">
-                <button class="nav-btn active" data-section="about">About</button>
-                <button class="nav-btn" data-section="education">Education</button>
-                <button class="nav-btn" data-section="experience">Experience</button>
-                <button class="nav-btn" data-section="projects">Projects</button>
-                <button class="nav-btn" data-section="contact">Contact</button>
-            </div>
-        </div>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <span class="nav-name">Nushrat Nureen</span>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#publications">Publications</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
     </nav>
-
-    <header>
-        <img src="Nushrat.jpeg" alt="Nushrat Nureen" class="profile-pic">
-        
-        <h1>Nushrat Nureen</h1>
-        <p>Urban and Regional Planning Graduate | Masters Student | Research & Academic Focus</p>
-    </header>
-
-    <div class="container">
-        <section id="about">
-            <h2>About Me</h2>
-            <p class="about-text">Welcome to my portfolio! I am a motivated professional with a background in Urban and Regional Planning, equipped with strong research and analytical skills. I am quick to learn, open to new ideas, and work well in collaborative team environments. I am passionate about pursuing a career in academia and research, where I aim to make meaningful contributions through innovative studies and sustainable planning solutions that address contemporary challenges.</p>
-        </section>
-
-        <section id="education">
-            <h2>Education</h2>
-            <ul class="education-list">
-                <li class="education-item">
-                    <div class="degree-title">Master of Science in Disaster Management</div>
-                    <div class="institution">Khulna University of Engineering & Technology</div>
-                    <div class="year">Currently Pursuing</div>
-                </li>
-                <li class="education-item">
-                    <div class="degree-title">Bachelor of Science in Urban and Regional Planning</div>
-                    <div class="institution">Khulna University of Engineering & Technology</div>
-                    <div class="year">Completed</div>
-                </li>
-            </ul>
-        </section>
-
-        <section id="experience">
-            <h2>Work Experience</h2>
-            <ul class="experience-list">
-                <li class="experience-item">
-                    <div class="project-role">Part-Time Lecturer</div>
-                    <h3>Daffodil International University</h3>
-                    <div class="year">Subject: Environmental Issues in Real Estate</div>
-                    <div class="description">
-                        <ul class="project-list" style="margin-top: 0.5rem;">
-                            <li>Coached and mentored prospective undergraduate students to enhance their understanding of environmental challenges in real estate.</li>
-                            <li>Prepared comprehensive academic materials and organized tutorials to support and guide junior students in their coursework.</li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="experience-item">
-                    <div class="project-role">Research Assistant</div>
-                    <h3>Multiple University Projects</h3>
-                    <div class="description">
-                        <ul class="project-list" style="margin-top: 0.5rem;">
-                            <li>Conducted field surveys, qualitative interviews, and data collection for various research initiatives.</li>
-                            <li>Analyzed complex datasets and contributed to report writing and documentation.</li>
-                            <li>Collaborated with international partners on research and implementation strategies.</li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </section>
-
-        <section id="projects">
-            <h2>Featured Projects</h2>
-            <div class="projects-grid">
-                
-                <div class="project-card">
-                    <div class="image-slider">
-                        <img src="n.jpeg" class="slide active">
-                        <img src="p.jpeg" class="slide">
-                        <img src="u.jpeg" class="slide">
-                        
-                        <button class="slider-btn prev-btn" onclick="changeSlide(this, -1)">❮</button>
-                        <button class="slider-btn next-btn" onclick="changeSlide(this, 1)">❯</button>
-                    </div>
-                    
-                    <div class="project-content">
-                        <span class="project-role">Research Assistant / Analyst</span>
-                        <h3>Female Vulnerability in Gabura, Satkhira</h3>
-                        <p>A comprehensive study focusing on the female demographic in the cyclone-prone Gabura union, investigating socio-economic and environmental impacts.</p>
-                        <ul class="project-list">
-                            <li>Conducted field surveys and qualitative interviews with women in the area.</li>
-                            <li>Analyzed socio-economic and environmental impacts of climate change on female livelihoods.</li>
-                            <li>Developed planning recommendations for women's empowerment and disaster risk reduction.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <img src="Gabura.jpg.jpeg" alt="Coastal Community" class="project-image">
-                    
-                    <div class="project-content">
-                        <span class="project-role">Research Assistant | UGC-Funded Project</span>
-                        <h3>Community Disaster Resilience Index for Coastal Areas</h3>
-                        <p>Integrating PCA and AHP methodologies to assess vulnerability and resilience in coastal communities.</p>
-                        <ul class="project-list">
-                            <li>Utilized Principal Component Analysis (PCA) and Analytical Hierarchy Process (AHP) methodologies.</li>
-                            <li>Contributed to comprehensive data analysis and index development.</li>
-                            <li>Supported assessment of vulnerability and resilience in coastal communities.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <img src="j.jpg.jpeg" alt="Sustainable Materials" class="project-image">
-                    
-                    <div class="project-content">
-                        <span class="project-role">Project Assistant</span>
-                        <h3>SCIP Plastics Project</h3>
-                        <p>International collaboration project focused on sustainable materials and life cycle assessment of jute products.</p>
-                        <ul class="project-list">
-                            <li>Conducted data collection and documentation for life cycle analysis of local jute products.</li>
-                            <li>Compiled and visualized complex datasets for analysis.</li>
-                            <li>Performed stakeholder analysis and engagements for model implementation on KUET Campus.</li>
-                            <li>Developed implementation plans and evaluated environmental impact of jute bag distribution model.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="image-slider">
-                        <img src="res.jpeg" alt="Research Photo 1" class="slide active">
-                        <img src="res2.jpeg" alt="Research Photo 2" class="slide">
-
-                        <button class="slider-btn prev-btn" onclick="changeSlide(this, -1)">❮</button>
-                        <button class="slider-btn next-btn" onclick="changeSlide(this, 1)">❯</button>
-                    </div>
-                    
-                    <div class="project-content">
-                        <span class="project-role">Academic Focus</span>
-                        <h3>Urban Planning & Sustainable Solutions</h3>
-                        <p>Research and academic orientation toward sustainable urban development, environmental planning, and community resilience.</p>
-                        <ul class="project-list">
-                            <li>Focus on climate change adaptation and disaster risk reduction in urban areas.</li>
-                            <li>Interest in sustainable development and environmental planning solutions.</li>
-                            <li>Commitment to evidence-based policy recommendations and community engagement.</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <section id="contact">
-            <h2>Contact & Connect</h2>
-            <div class="contact-info">
-                <p>Ready to collaborate or discuss research opportunities? Let's connect!</p>
-                
-                <div class="contact-links-container">
-                    <a href="mailto:nushratnureenzaana@gmail.com" class="contact-link-btn">
-                        <span class="contact-link-icon">✉️</span>
-                        <span>Email Me</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/nushrat-nureen-zana-0066b7171/" target="_blank" class="contact-link-btn">
-                        <span class="contact-link-icon">in</span>
-                        <span>LinkedIn</span>
-                    </a>
-                </div>
-
-                <div class="contact-details">
-                    <p class="contact-label">Email</p>
-                    <p class="contact-value"><a href="mailto:nushratnureenzaana@gmail.com">nushratnureenzaana@gmail.com</a></p>
-                    <p class="contact-label">Professional Profile</p>
-                    <p class="contact-value"><a href="https://www.linkedin.com/in/nushrat-nureen-zana-0066b7171/" target="_blank">linkedin.com/in/nushrat-nureen-zana</a></p>
-                </div>
-            </div>
-        </section>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">☀</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
     </div>
+  </div>
+</header>
 
-    <script src="script.js"></script>
+<div class="hero" id="about">
+  <div>
+    <div class="kicker">Disaster Management · Urban &amp; Regional Planning</div>
+    <h1>Nushrat Nureen</h1>
+    <p class="role">M.Sc. Researcher, Institute of Disaster Management, KUET</p>
+    <p class="lede">
+      I work at the intersection of geospatial machine learning and coastal community resilience —
+      building flood susceptibility models with one hand and documenting the lived, non-economic
+      losses of climate-displaced women with the other. Currently completing my M.Sc. thesis on
+      flood susceptibility and exposure assessment in Bangladesh's central and western floodplains,
+      under Dr. Anjum Tasnuva.
+    </p>
+    <div class="hero-meta">
+      <span>Chandpur, Bangladesh</span>
+      <span>&middot;</span>
+      <a href="mailto:nushratnureenzana@gmail.com">nushratnureenzana@gmail.com</a>
+      <span>&middot;</span>
+      <a href="https://www.linkedin.com/in/nushrat-nureen-zana-0066b7171/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <div class="hero-photo-wrap">
+    <img src="img/Nushrat.jpeg" alt="Nushrat Nureen">
+  </div>
+</div>
+
+<div class="field-strip">
+  <div class="field-strip-grid">
+    <a href="img/u.jpeg" target="_blank"><img src="img/u.jpeg" alt="Field team in Gabura, Satkhira"></a>
+    <a href="img/n.jpeg" target="_blank"><img src="img/n.jpeg" alt="Interviewing women in coastal Gabura"></a>
+    <a href="img/p.jpeg" target="_blank"><img src="img/p.jpeg" alt="Community health signage, Shyamnagar"></a>
+  </div>
+  <p class="field-caption">Fieldwork in Gabura Union, Satkhira</p>
+</div>
+
+<section id="education">
+  <div class="section-head"><span class="num">01</span><h2>Education</h2></div>
+
+  <div class="entry">
+    <div class="entry-date">2024 – Present</div>
+    <div>
+      <h3>M.Sc. in Disaster Management</h3>
+      <div class="org">Institute of Disaster Management, KUET</div>
+      <div class="meta-line">CGPA 3.67 / 4.00</div>
+      <p style="margin:0; color:var(--ink-soft); font-size:.93rem;">
+        Thesis: <em>Machine Learning-based Comparative Flood Susceptibility and Exposure Assessment in the
+        Central and Western Floodplains of Bangladesh</em> (defense scheduled, September 2026).
+        Supervisor: Dr. Anjum Tasnuva.
+      </p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-date">2017 – 2023</div>
+    <div>
+      <h3>Bachelor of Urban &amp; Regional Planning (BURP)</h3>
+      <div class="org">Khulna University of Engineering &amp; Technology</div>
+      <div class="meta-line">CGPA 3.55 / 4.00 &middot; University Merit Scholarship</div>
+      <p style="margin:0; color:var(--ink-soft); font-size:.93rem;">
+        Thesis: <em>Prevailing Service Facilities and Its Planning in Khulna City's Slum Area.</em>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-head"><span class="num">02</span><h2>Research &amp; Teaching Experience</h2></div>
+
+  <div class="entry">
+    <div class="entry-date">Jan 2026 – Present</div>
+    <div>
+      <h3>Research Assistant</h3>
+      <div class="org">UGC-Funded Project, KUET</div>
+      <ul>
+        <li>Integrated Principal Component Analysis (PCA) and the Analytic Hierarchy Process (AHP) to
+          construct a Community Disaster Resilience Index for coastal Bangladesh.</li>
+        <li>Findings consolidated into a journal manuscript currently under review.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-date">Jan 2024 – May 2025</div>
+    <div>
+      <h3>Research Assistant</h3>
+      <div class="org">SCIP Plastics Project, KUET</div>
+      <ul>
+        <li>Contributed to developing an innovative jute-based plastic substitute.</li>
+        <li>Assisted the team lead with project design, pilot testing, and evaluation.</li>
+        <li>Prepared presentations and documentation for stakeholder communication.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-date">Jul 2023 – Dec 2023</div>
+    <div>
+      <h3>Part-Time Lecturer</h3>
+      <div class="org">Dept. of Real Estate, Daffodil International University</div>
+      <ul>
+        <li>Designed and delivered the undergraduate course <em>Environmental Issues in Real Estate.</em></li>
+        <li>Prepared tutorials and assessments, and mentored students.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="section-head"><span class="num">03</span><h2>Publications</h2></div>
+
+  <div class="pub-group">
+    <h3 class="pub-heading">Journal Manuscripts (Under Review)</h3>
+
+    <div class="pub-item">
+      <span class="pub-tag">Lead author</span>
+      Nureen, N., &amp; Tasnuva, A. &ldquo;Flood susceptibility prediction modeling using machine learning
+      algorithms: Evidence from central and south-western Bangladesh.&rdquo;
+    </div>
+    <div class="pub-item">
+      <span class="pub-tag">Co-author</span>
+      Tasnuva, A., Nureen, N., &amp; Hossain, M. I. &ldquo;Integrating AHP and principal component analysis
+      to develop a community disaster resilience index for coastal areas.&rdquo;
+    </div>
+    <div class="pub-item">
+      <span class="pub-tag">Co-author</span>
+      Rudra, R. R., Yeasar, S., Noor, T. A. N., Nureen, N., Das, S. K., Sany, S. M., Ahmed, S., &amp; Alsulamy, S.
+      &ldquo;Climate crisis and food security in Bangladesh: Utilizing machine learning in geospatial
+      environment to investigate drought tolerance of major crops.&rdquo;
+    </div>
+  </div>
+
+  <div class="pub-group">
+    <h3 class="pub-heading">Conference Publications</h3>
+
+    <div class="pub-item">
+      <span class="pub-tag">Best Paper Award</span>
+      Nureen, N., &amp; Islam, M. R. &ldquo;Flood vulnerability mapping in Bangladesh: A machine learning
+      approach.&rdquo; &mdash; ICSWM 2024
+    </div>
+    <div class="pub-item">
+      Nureen, N., &amp; Islam, M. R. &ldquo;Health risk assessment and environmental impacts of jute
+      manufacturing: A critical review and implications.&rdquo; &mdash; ICACE 2024
+    </div>
+    <div class="pub-item">
+      Hafiz, S. B., &amp; Nureen, N. &ldquo;Integrated assessment of heatwave vulnerability in Khulna city:
+      A multi-factor index.&rdquo; &mdash; ICACE 2024
+    </div>
+    <div class="pub-item">
+      Nureen, N., Raisa, S. S., Ahmed, K., Sadiq, M. A., Jahan, M., Islam, M. A., &amp; Saha, B. K.
+      &ldquo;Community-based approaches for sustainable outcomes: A case study of participatory rural
+      appraisal in Dakatia village, Khulna.&rdquo; &mdash; ICACE 2024
+    </div>
+    <div class="pub-item">
+      Rahman, S., Ahmed, K., Nureen, N., &amp; Jahan, M. &ldquo;Assessment of regional disparity: A study on
+      Bangladesh.&rdquo; &mdash; ICACE 2024
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-head"><span class="num">04</span><h2>Featured Projects</h2></div>
+
+  <div class="project">
+    <div class="project-media">
+      <img class="cover" src="img/n.jpeg" alt="Interviewing women in coastal Gabura">
+      <div class="sub-grid">
+        <img src="img/u.jpeg" alt="Field team, Gabura">
+        <img src="img/Gabura.jpg" alt="Study area map, Gabura union">
+      </div>
+    </div>
+    <div>
+      <div class="project-tag">Research Assistant / Analyst</div>
+      <h3>Female Vulnerability in Gabura, Satkhira</h3>
+      <p style="color:var(--ink-soft); font-size:.94rem; margin:6px 0 0;">
+        A comprehensive study focusing on the female demographic in the cyclone-prone Gabura union,
+        investigating socio-economic and environmental impacts.
+      </p>
+      <ul>
+        <li>Conducted field surveys and qualitative interviews with women in the area.</li>
+        <li>Analyzed socio-economic and environmental impacts of climate change on female livelihoods.</li>
+        <li>Developed planning recommendations for women's empowerment and disaster risk reduction.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="project">
+    <div>
+      <div class="project-tag">Research Assistant · UGC-Funded Project</div>
+      <h3>Community Disaster Resilience Index for Coastal Areas</h3>
+      <p style="color:var(--ink-soft); font-size:.94rem; margin:6px 0 0;">
+        Integrating PCA and AHP methodologies to assess vulnerability and resilience in coastal communities.
+      </p>
+      <ul>
+        <li>Utilized Principal Component Analysis (PCA) and Analytical Hierarchy Process (AHP) methodologies.</li>
+        <li>Contributed to comprehensive data analysis and index development.</li>
+        <li>Supported assessment of vulnerability and resilience in coastal communities.</li>
+      </ul>
+    </div>
+    <div class="project-media">
+      <img class="cover" src="img/p.jpeg" alt="Community resilience signage, coastal Bangladesh">
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="project-media">
+      <img class="cover" src="img/j.jpg" alt="Jute fiber processing">
+    </div>
+    <div>
+      <div class="project-tag">Project Assistant</div>
+      <h3>SCIP Plastics Project</h3>
+      <p style="color:var(--ink-soft); font-size:.94rem; margin:6px 0 0;">
+        International collaboration project focused on sustainable materials and life cycle assessment
+        of jute products.
+      </p>
+      <ul>
+        <li>Conducted data collection and documentation for life cycle analysis of local jute products.</li>
+        <li>Compiled and visualized complex datasets for analysis.</li>
+        <li>Performed stakeholder analysis and engagements for model implementation on KUET Campus.</li>
+        <li>Developed implementation plans and evaluated environmental impact of jute bag distribution model.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head"><span class="num">05</span><h2>Technical Skills</h2></div>
+  <div class="skills-grid">
+    <div class="skill-block">
+      <h3>Geospatial &amp; Remote Sensing</h3>
+      <div class="chip-row">
+        <span class="chip">ArcGIS</span>
+        <span class="chip">ERDAS Imagine</span>
+        <span class="chip">Google Earth Engine</span>
+        <span class="chip">UAV Data Collection</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h3>Programming &amp; Modeling</h3>
+      <div class="chip-row">
+        <span class="chip">R (RStudio)</span>
+        <span class="chip">XGBoost</span>
+        <span class="chip">LightGBM</span>
+        <span class="chip">ANN</span>
+        <span class="chip">AHP</span>
+        <span class="chip">PCA</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h3>Statistical &amp; Analytical</h3>
+      <div class="chip-row">
+        <span class="chip">IBM SPSS</span>
+        <span class="chip">OpenLCA</span>
+        <span class="chip">Microsoft Office</span>
+        <span class="chip">Adobe Illustrator</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h3>Languages</h3>
+      <div class="chip-row">
+        <span class="chip">Bengali (Native)</span>
+        <span class="chip">English</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="awards">
+  <div class="section-head"><span class="num">06</span><h2>Awards &amp; Training</h2></div>
+  <ul class="list-simple">
+    <li><span>Best Paper Award &mdash; International Conference on Sustainable Waste Management (ICSWM)</span><span class="badge-year">2024</span></li>
+    <li><span>University Merit Scholarship &mdash; Khulna University of Engineering &amp; Technology</span><span class="badge-year">2017–2023</span></li>
+    <li><span>OpenLCA Basic Public Training</span><span class="badge-year">Sep 2024</span></li>
+    <li><span>Fundamentals of UAV Data Collection</span><span class="badge-year">Mar 2023</span></li>
+    <li><span>IBM SPSS &amp; Excel Training</span><span class="badge-year">Oct 2019</span></li>
+    <li><span>GIS &amp; Remote Sensing Workshop</span><span class="badge-year">Mar 2019</span></li>
+  </ul>
+</section>
+
+<section id="contact">
+  <div class="contact-box">
+    <div class="section-head"><span class="num" style="color:var(--amber);">07</span><h2>Contact</h2></div>
+    <div class="contact-row">
+      <span class="label">Email</span>
+      <a href="mailto:nushratnureenzana@gmail.com">nushratnureenzana@gmail.com</a>
+    </div>
+    <div class="contact-row">
+      <span class="label">Phone</span>
+      <span>+880 1638 084122</span>
+    </div>
+    <div class="contact-row">
+      <span class="label">LinkedIn</span>
+      <a href="https://www.linkedin.com/in/nushrat-nureen-zana-0066b7171/" target="_blank" rel="noopener">linkedin.com/in/nushrat-nureen-zana</a>
+    </div>
+    <div class="contact-row">
+      <span class="label">Location</span>
+      <span>Chandpur, Bangladesh</span>
+    </div>
+    <a class="btn" href="mailto:nushratnureenzana@gmail.com">Email me</a>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Nushrat Nureen. Built with care for research and resilience.
+</footer>
+
+<script>
+  const themeToggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  const saved = localStorage.getItem('portfolio-theme');
+  if(saved === 'dark'){ root.setAttribute('data-theme','dark'); themeToggle.textContent = '☾'; }
+  themeToggle.addEventListener('click', () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    if(isDark){ root.removeAttribute('data-theme'); themeToggle.textContent = '☀'; localStorage.setItem('portfolio-theme','light'); }
+    else{ root.setAttribute('data-theme','dark'); themeToggle.textContent = '☾'; localStorage.setItem('portfolio-theme','dark'); }
+  });
+
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+</script>
+
 </body>
 </html>
