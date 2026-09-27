@@ -15,12 +15,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#16233A;
-    --navy-deep:#0C1420;
+    --charcoal:#211B15;
+    --charcoal-deep:#140F0B;
     --teal:#2F6E6A;
     --amber:#C98A2C;
     --paper:#FAF8F3;
     --surface:#FFFFFF;
+    --surface-alt:#F3EEE3;
     --line:#E3DFD3;
     --ink:#22303F;
     --ink-soft:#5B6672;
@@ -28,11 +29,16 @@
     --maxw:980px;
   }
   [data-theme="dark"]{
-    --paper:#0F1720;
-    --surface:#16212C;
-    --line:#28343F;
-    --ink:#E8E9E4;
-    --ink-soft:#A6AEB6;
+    --charcoal:#0E0B08;
+    --charcoal-deep:#000000;
+    --teal:#5FB3A9;
+    --amber:#E0A94A;
+    --paper:#181410;
+    --surface:#221D17;
+    --surface-alt:#2B241C;
+    --line:#3B3226;
+    --ink:#F1E9DC;
+    --ink-soft:#BBAD98;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -62,7 +68,7 @@
     backdrop-filter:blur(6px);
     border-bottom:1px solid var(--line);
   }
-  [data-theme="dark"] header.site-nav{background:rgba(15,23,32,.88);}
+  [data-theme="dark"] header.site-nav{background:rgba(24,20,16,.88);}
   .nav-inner{
     max-width:var(--maxw); margin:0 auto; padding:14px 28px;
     display:flex; align-items:center; justify-content:space-between;
@@ -107,6 +113,20 @@
   .field-strip-grid a{display:block; overflow:hidden; border-radius:var(--radius);}
   .field-strip-grid a:hover img{transform:scale(1.04);}
   .field-caption{margin-top:10px; font-size:.82rem; color:var(--ink-soft); text-align:right;}
+
+  .interests-section{background:var(--surface-alt); border:1px solid var(--line); border-radius:var(--radius); margin-top:44px;}
+  .interests-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;}
+  .interest-card{
+    background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--amber);
+    border-radius:var(--radius); padding:20px;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .interest-card:hover{
+    transform:translateY(-3px); border-left-color:var(--teal);
+    box-shadow:0 14px 30px -18px rgba(12,10,8,.4);
+  }
+  .interest-card h3{font-size:1.02rem; margin-bottom:6px;}
+  .interest-card p{color:var(--ink-soft); font-size:.88rem; margin:0;}
 
   section{max-width:var(--maxw); margin:0 auto; padding:56px 28px;}
   .section-head{
@@ -177,7 +197,7 @@
   .list-simple .badge-year{color:var(--ink-soft); font-size:.85rem; white-space:nowrap;}
 
   .contact-box{
-    background:var(--navy); color:#EDEEE9; border-radius:var(--radius); padding:40px;
+    background:var(--charcoal); color:#F1E9DC; border-radius:var(--radius); padding:40px;
     display:grid; gap:18px;
   }
   .contact-box h2{color:#fff;}
@@ -188,7 +208,7 @@
   .contact-row .label{color:rgba(237,238,233,.6); font-size:.85rem;}
   .contact-row a{color:#EDEEE9;}
   .btn{
-    display:inline-block; background:var(--amber); color:var(--navy-deep) !important;
+    display:inline-block; background:var(--amber); color:var(--charcoal-deep) !important;
     padding:11px 22px; border-radius:20px; font-size:.9rem; font-weight:600;
     justify-self:start;
   }
@@ -201,6 +221,7 @@
     .hero-photo-wrap{aspect-ratio:16/10; max-width:320px;}
     .field-strip-grid{grid-template-columns:1fr 1fr;}
     .field-strip-grid a:first-child{grid-column:1/-1;}
+    .interests-grid{grid-template-columns:1fr;}
     .entry{grid-template-columns:1fr;}
     .entry-date{order:2;}
     .project, .project:nth-child(even){grid-template-columns:1fr;}
@@ -223,6 +244,7 @@
     <span class="nav-name">Nushrat Nureen</span>
     <nav class="nav-links" id="navLinks">
       <a href="#about">About</a>
+      <a href="#interests">Research</a>
       <a href="#education">Education</a>
       <a href="#experience">Experience</a>
       <a href="#publications">Publications</a>
@@ -271,8 +293,39 @@
   <p class="field-caption">Fieldwork in Gabura Union, Satkhira</p>
 </div>
 
+<section id="interests" class="interests-section">
+  <div class="section-head"><span class="num">01</span><h2>Research Interests</h2></div>
+  <p class="lede" style="margin-bottom:26px;">The threads running through my research — where geospatial data science meets the everyday reality of climate risk.</p>
+  <div class="interests-grid">
+    <div class="interest-card">
+      <h3>Flood Susceptibility &amp; Exposure Modeling</h3>
+      <p>Machine learning (XGBoost, LightGBM, ANN) applied to conditioning factors to map where and why floods hit hardest.</p>
+    </div>
+    <div class="interest-card">
+      <h3>Geospatial Machine Learning</h3>
+      <p>GIS, remote sensing, and predictive modeling combined to turn raw spatial data into decision-ready risk maps.</p>
+    </div>
+    <div class="interest-card">
+      <h3>Coastal Community Resilience</h3>
+      <p>Community disaster resilience indices built with PCA and AHP to benchmark adaptive capacity in coastal Bangladesh.</p>
+    </div>
+    <div class="interest-card">
+      <h3>Gender &amp; Climate Displacement</h3>
+      <p>Documenting the lived, non-economic losses of climate-displaced women in cyclone-prone unions like Gabura.</p>
+    </div>
+    <div class="interest-card">
+      <h3>Disaster Risk Reduction Policy</h3>
+      <p>Translating exposure and vulnerability findings into planning recommendations for flood-risk-informed land use.</p>
+    </div>
+    <div class="interest-card">
+      <h3>Sustainable Materials &amp; Circular Economy</h3>
+      <p>Life-cycle assessment of jute-based alternatives to plastic, linking environmental planning to material science.</p>
+    </div>
+  </div>
+</section>
+
 <section id="education">
-  <div class="section-head"><span class="num">01</span><h2>Education</h2></div>
+  <div class="section-head"><span class="num">02</span><h2>Education</h2></div>
 
   <div class="entry">
     <div class="entry-date">2024 – Present</div>
@@ -302,7 +355,7 @@
 </section>
 
 <section id="experience">
-  <div class="section-head"><span class="num">02</span><h2>Research &amp; Teaching Experience</h2></div>
+  <div class="section-head"><span class="num">03</span><h2>Research &amp; Teaching Experience</h2></div>
 
   <div class="entry">
     <div class="entry-date">Jan 2026 – Present</div>
@@ -344,7 +397,7 @@
 </section>
 
 <section id="publications">
-  <div class="section-head"><span class="num">03</span><h2>Publications</h2></div>
+  <div class="section-head"><span class="num">04</span><h2>Publications</h2></div>
 
   <div class="pub-group">
     <h3 class="pub-heading">Journal Manuscripts (Under Review)</h3>
@@ -396,7 +449,7 @@
 </section>
 
 <section id="projects">
-  <div class="section-head"><span class="num">04</span><h2>Featured Projects</h2></div>
+  <div class="section-head"><span class="num">05</span><h2>Featured Projects</h2></div>
 
   <div class="project">
     <div class="project-media">
@@ -486,7 +539,7 @@
 </section>
 
 <section id="skills">
-  <div class="section-head"><span class="num">05</span><h2>Technical Skills</h2></div>
+  <div class="section-head"><span class="num">06</span><h2>Technical Skills</h2></div>
   <div class="skills-grid">
     <div class="skill-block">
       <h3>Geospatial &amp; Remote Sensing</h3>
@@ -528,7 +581,7 @@
 </section>
 
 <section id="awards">
-  <div class="section-head"><span class="num">06</span><h2>Awards &amp; Training</h2></div>
+  <div class="section-head"><span class="num">07</span><h2>Awards &amp; Training</h2></div>
   <ul class="list-simple">
     <li><span>Best Paper Award &mdash; International Conference on Sustainable Waste Management (ICSWM)</span><span class="badge-year">2024</span></li>
     <li><span>University Merit Scholarship &mdash; Khulna University of Engineering &amp; Technology</span><span class="badge-year">2017–2023</span></li>
@@ -541,7 +594,7 @@
 
 <section id="contact">
   <div class="contact-box">
-    <div class="section-head"><span class="num" style="color:var(--amber);">07</span><h2>Contact</h2></div>
+    <div class="section-head"><span class="num" style="color:var(--amber);">08</span><h2>Contact</h2></div>
     <div class="contact-row">
       <span class="label">Email</span>
       <a href="mailto:nushratnureenzana@gmail.com">nushratnureenzana@gmail.com</a>
