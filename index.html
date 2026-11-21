@@ -19,6 +19,7 @@
     --charcoal-deep:#140F0B;
     --teal:#2F6E6A;
     --amber:#C98A2C;
+    --coral:#D9573F;
     --paper:#FAF8F3;
     --surface:#FFFFFF;
     --surface-alt:#F3EEE3;
@@ -33,6 +34,7 @@
     --charcoal-deep:#000000;
     --teal:#5FB3A9;
     --amber:#E0A94A;
+    --coral:#FF8A68;
     --paper:#181410;
     --surface:#221D17;
     --surface-alt:#2B241C;
@@ -44,12 +46,46 @@
   html{scroll-behavior:smooth;}
   body{
     margin:0;
-    background:var(--paper);
+    background:
+      radial-gradient(900px 520px at 12% -8%, color-mix(in srgb, var(--teal) 14%, transparent), transparent 60%),
+      radial-gradient(760px 520px at 108% 8%, color-mix(in srgb, var(--amber) 16%, transparent), transparent 60%),
+      radial-gradient(820px 620px at 50% 115%, color-mix(in srgb, var(--coral) 10%, transparent), transparent 62%),
+      var(--paper);
+    background-attachment:fixed;
     color:var(--ink);
     font-family:'Inter',system-ui,sans-serif;
     font-size:16px;
     line-height:1.65;
-    transition:background .3s ease, color .3s ease;
+    transition:background-color .3s ease, color .3s ease;
+  }
+
+  .scroll-progress{
+    position:fixed; top:0; left:0; height:3px; width:0%; z-index:100;
+    background:linear-gradient(90deg, var(--teal), var(--amber), var(--coral));
+    transition:width .12s ease;
+  }
+
+  .back-to-top{
+    position:fixed; bottom:24px; right:24px; z-index:90;
+    width:44px; height:44px; border-radius:50%; border:none; cursor:pointer;
+    background:linear-gradient(135deg, var(--amber), var(--coral)); color:var(--charcoal-deep);
+    font-size:18px; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 26px -10px rgba(0,0,0,.45);
+    opacity:0; transform:translateY(10px); pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  .back-to-top.visible{opacity:1; transform:translateY(0); pointer-events:auto;}
+  .back-to-top:hover{transform:translateY(-3px);}
+
+  .reveal{opacity:0; transform:translateY(20px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1 !important; transform:none !important; transition:none !important;}
+    .status-pill .dot{animation:none !important;}
+  }
+  @media print{
+    .reveal{opacity:1 !important; transform:none !important;}
+    .scroll-progress, .back-to-top, .nav-toggle{display:none !important;}
   }
   h1,h2,h3{
     font-family:'Source Serif 4', Georgia, serif;
@@ -75,8 +111,13 @@
   }
   .nav-name{font-family:'Source Serif 4',serif; font-weight:600; font-size:1.05rem;}
   .nav-links{display:flex; gap:22px; align-items:center;}
-  .nav-links a{color:var(--ink-soft); font-size:.92rem; font-weight:500;}
+  .nav-links a{color:var(--ink-soft); font-size:.92rem; font-weight:500; position:relative; padding-bottom:3px;}
   .nav-links a:hover{color:var(--teal); text-decoration:none;}
+  .nav-links a.active{color:var(--ink);}
+  .nav-links a.active::after{
+    content:""; position:absolute; left:0; right:0; bottom:-4px; height:2px; border-radius:2px;
+    background:linear-gradient(90deg, var(--teal), var(--amber));
+  }
   .theme-toggle{
     border:1px solid var(--line); background:var(--surface); color:var(--ink);
     width:32px; height:32px; border-radius:50%; cursor:pointer;
@@ -104,6 +145,43 @@
     box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);
   }
 
+  .status-pill{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--surface); border:1px solid var(--line);
+    padding:6px 14px; border-radius:20px; font-size:.82rem; color:var(--ink-soft);
+    margin-top:16px;
+  }
+  .status-pill .dot{
+    width:8px; height:8px; border-radius:50%; background:#3FB950; flex:none;
+    animation:pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot{
+    0%{box-shadow:0 0 0 0 rgba(63,185,80,.55);}
+    70%{box-shadow:0 0 0 7px rgba(63,185,80,0);}
+    100%{box-shadow:0 0 0 0 rgba(63,185,80,0);}
+  }
+
+  .stats-row{
+    max-width:var(--maxw); margin:36px auto 0; padding:0 28px;
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;
+  }
+  .stat{
+    background:var(--surface); border:1px solid var(--line); border-bottom:3px solid var(--teal);
+    border-radius:var(--radius); padding:16px 10px; text-align:center;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .stat:hover{transform:translateY(-3px); box-shadow:0 14px 28px -16px rgba(12,10,8,.35);}
+  .stat:nth-child(2){border-bottom-color:var(--amber);}
+  .stat:nth-child(3){border-bottom-color:var(--coral);}
+  .stat:nth-child(4){border-bottom-color:var(--teal);}
+  .stat-num{
+    display:block; font-family:'Source Serif 4',serif; font-weight:700; font-size:1.85rem;
+    background:linear-gradient(135deg, var(--teal), var(--amber));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .stat:nth-child(3) .stat-num{background:linear-gradient(135deg, var(--coral), var(--amber)); -webkit-background-clip:text; background-clip:text;}
+  .stat-label{display:block; font-size:.76rem; color:var(--ink-soft); margin-top:4px; letter-spacing:.01em;}
+
   .field-strip{max-width:var(--maxw); margin:44px auto 0; padding:0 28px;}
   .field-strip-grid{
     display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:10px;
@@ -129,9 +207,13 @@
     transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
   }
   .interest-card:hover{
-    transform:translateY(-3px); border-left-color:var(--teal);
-    box-shadow:0 14px 30px -18px rgba(12,10,8,.4);
+    transform:translateY(-4px) scale(1.01);
+    box-shadow:0 16px 32px -18px rgba(12,10,8,.4);
   }
+  .interest-card:nth-child(3n+1){border-left-color:var(--teal);}
+  .interest-card:nth-child(3n+2){border-left-color:var(--amber);}
+  .interest-card:nth-child(3n+3){border-left-color:var(--coral);}
+  .interest-card .icon{font-size:1.3rem; margin-bottom:8px; display:block;}
   .interest-card h3{font-size:1.02rem; margin-bottom:6px;}
   .interest-card p{color:var(--ink-soft); font-size:.88rem; margin:0;}
 
@@ -142,7 +224,13 @@
     padding-bottom:12px; margin-bottom:30px;
   }
   .section-head h2{font-size:1.4rem;}
-  .section-head .num{color:var(--amber); font-family:'Source Serif 4',serif; font-size:1rem;}
+  .section-head .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:28px; height:28px; border-radius:50%; flex:none;
+    background:linear-gradient(135deg, var(--teal), var(--amber));
+    color:#fff; font-size:.76rem; font-weight:700; font-family:'Inter',sans-serif;
+  }
+  .contact-box .section-head .num{background:linear-gradient(135deg, var(--amber), var(--coral));}
 
   p{color:var(--ink);}
   p.lede{color:var(--ink-soft); max-width:56ch;}
@@ -150,7 +238,9 @@
   .entry{
     display:grid; grid-template-columns:150px 1fr; gap:24px;
     padding:20px 0; border-bottom:1px solid var(--line);
+    transition:background-color .2s ease;
   }
+  .entry:hover{background:var(--surface-alt);}
   .entry:last-child{border-bottom:none;}
   .entry-date{color:var(--ink-soft); font-size:.85rem; padding-top:2px;}
   .entry h3{font-size:1.08rem; margin-bottom:2px;}
@@ -168,11 +258,18 @@
     font-size:.72rem; font-weight:600; padding:2px 8px; border-radius:20px;
     margin-right:10px; vertical-align:middle;
   }
+  .pub-tag.submitted{border-color:var(--coral); color:var(--coral);}
+  .pub-tag.award{border-color:var(--amber); color:var(--amber); background:color-mix(in srgb, var(--amber) 14%, transparent);}
+  .pub-item{transition:background-color .2s ease;}
+  .pub-item:hover{background:var(--surface-alt);}
 
   .project{
     display:grid; grid-template-columns:1fr 1fr; gap:36px;
     padding:44px 0; border-bottom:1px solid var(--line); align-items:start;
+    transition:transform .25s ease;
   }
+  .project:hover .cover{transform:scale(1.015);}
+  .project-media .cover{transition:transform .4s ease;}
   .project:nth-child(even) .project-media{order:2;}
   .project:last-child{border-bottom:none;}
   .project-tag{color:var(--teal); font-size:.82rem; font-weight:600; margin-bottom:4px;}
@@ -193,7 +290,11 @@
   .skills-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
   .skill-block h3{font-size:.85rem; color:var(--teal); font-weight:600; margin-bottom:8px;}
   .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
-  .chip{background:var(--surface); border:1px solid var(--line); padding:5px 12px; border-radius:20px; font-size:.83rem; color:var(--ink);}
+  .chip{
+    background:var(--surface); border:1px solid var(--line); padding:5px 12px; border-radius:20px;
+    font-size:.83rem; color:var(--ink); transition:border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .chip:hover{border-color:var(--amber); color:var(--amber); transform:translateY(-2px);}
 
   .list-simple{list-style:none; margin:0; padding:0;}
   .list-simple li{
@@ -238,6 +339,7 @@
     .field-strip-grid a:first-child{grid-column:1/-1;}
     .thesis-gallery{grid-template-columns:1fr 1fr;}
     .interests-grid{grid-template-columns:1fr;}
+    .stats-row{grid-template-columns:1fr 1fr;}
     .entry{grid-template-columns:1fr;}
     .entry-date{order:2;}
     .project, .project:nth-child(even){grid-template-columns:1fr;}
@@ -254,6 +356,8 @@
 </style>
 </head>
 <body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <header class="site-nav">
   <div class="nav-inner">
@@ -294,13 +398,33 @@
       <span>&middot;</span>
       <a href="https://www.linkedin.com/in/nushrat-nureen-zana-0066b7171/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
+    <div class="status-pill"><span class="dot"></span> Open to research collaborations &amp; co-authorship</div>
   </div>
   <div class="hero-photo-wrap">
     <img src="img/nushrat.jpeg" alt="Nushrat Nureen">
   </div>
 </div>
 
-<div class="field-strip">
+<div class="stats-row reveal">
+  <div class="stat">
+    <span class="stat-num">9</span>
+    <span class="stat-label">Publications</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">4</span>
+    <span class="stat-label">Research Projects</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">7</span>
+    <span class="stat-label">Awards &amp; Trainings</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">3+</span>
+    <span class="stat-label">Years of Research</span>
+  </div>
+</div>
+
+<div class="field-strip reveal">
   <div class="field-strip-grid">
     <a href="img/field-team.jpeg" target="_blank"><img src="img/field-team.jpeg" alt="Field team in Gabura, Satkhira"></a>
     <a href="img/field-interview.jpeg" target="_blank"><img src="img/field-interview.jpeg" alt="Interviewing women in coastal Gabura"></a>
@@ -309,38 +433,44 @@
   <p class="field-caption">Fieldwork in Gabura Union, Satkhira</p>
 </div>
 
-<section id="interests" class="interests-section">
+<section id="interests" class="interests-section reveal">
   <div class="section-head"><span class="num">01</span><h2>Research Interests</h2></div>
   <p class="lede" style="margin-bottom:26px;">The threads running through my research — where geospatial data science meets the everyday reality of climate risk.</p>
   <div class="interests-grid">
     <div class="interest-card">
+      <span class="icon">🌊</span>
       <h3>Flood Susceptibility &amp; Exposure Modeling</h3>
       <p>Machine learning (XGBoost, LightGBM, ANN) applied to conditioning factors to map where and why floods hit hardest.</p>
     </div>
     <div class="interest-card">
+      <span class="icon">🛰️</span>
       <h3>Geospatial Machine Learning</h3>
       <p>GIS, remote sensing, and predictive modeling combined to turn raw spatial data into decision-ready risk maps.</p>
     </div>
     <div class="interest-card">
+      <span class="icon">🏘️</span>
       <h3>Coastal Community Resilience</h3>
       <p>Community disaster resilience indices built with PCA and AHP to benchmark adaptive capacity in coastal Bangladesh.</p>
     </div>
     <div class="interest-card">
+      <span class="icon">👩‍👧</span>
       <h3>Gender &amp; Climate Displacement</h3>
       <p>Documenting the lived, non-economic losses of climate-displaced women in cyclone-prone unions like Gabura.</p>
     </div>
     <div class="interest-card">
+      <span class="icon">📋</span>
       <h3>Disaster Risk Reduction Policy</h3>
       <p>Translating exposure and vulnerability findings into planning recommendations for flood-risk-informed land use.</p>
     </div>
     <div class="interest-card">
+      <span class="icon">♻️</span>
       <h3>Sustainable Materials &amp; Circular Economy</h3>
       <p>Life-cycle assessment of jute-based alternatives to plastic, linking environmental planning to material science.</p>
     </div>
   </div>
 </section>
 
-<section id="education">
+<section id="education" class="reveal">
   <div class="section-head"><span class="num">02</span><h2>Education</h2></div>
 
   <div class="entry">
@@ -377,7 +507,7 @@
   </div>
 </section>
 
-<section id="experience">
+<section id="experience" class="reveal">
   <div class="section-head"><span class="num">03</span><h2>Research &amp; Teaching Experience</h2></div>
 
   <div class="entry">
@@ -424,7 +554,7 @@
   </div>
 </section>
 
-<section id="publications">
+<section id="publications" class="reveal">
   <div class="section-head"><span class="num">04</span><h2>Publications</h2></div>
 
   <div class="pub-group">
@@ -441,12 +571,12 @@
       to develop a community disaster resilience index for coastal areas.&rdquo;
     </div>
     <div class="pub-item">
-      <span class="pub-tag">Submitted</span>
+      <span class="pub-tag submitted">Submitted</span>
       Nureen, N. &ldquo;Climate-induced Early Marriage as Non-economic Loss and Damage in South-western
       Coastal Bangladesh: A Machine Learning Approach to the Intergenerational Cycle.&rdquo;
     </div>
     <div class="pub-item">
-      <span class="pub-tag">Submitted</span>
+      <span class="pub-tag submitted">Submitted</span>
       Nureen, N. &ldquo;A Tale of Embodied Loss: Life-Cycle Analysis of Cumulative Non-Economic Loss and
       Damage among Women in Coastal Bangladesh.&rdquo;
     </div>
@@ -456,7 +586,7 @@
     <h3 class="pub-heading">Conference Publications</h3>
 
     <div class="pub-item">
-      <span class="pub-tag">Best Paper Award</span>
+      <span class="pub-tag award">Best Paper Award</span>
       Nureen, N., &amp; Islam, M. R. &ldquo;Flood vulnerability mapping in Bangladesh: A machine learning
       approach.&rdquo; &mdash; ICSWM 2024
     </div>
@@ -483,7 +613,7 @@
   </div>
 </section>
 
-<section id="projects">
+<section id="projects" class="reveal">
   <div class="section-head"><span class="num">05</span><h2>Featured Projects</h2></div>
 
   <div class="project">
@@ -580,7 +710,7 @@
   </div>
 </section>
 
-<section id="skills">
+<section id="skills" class="reveal">
   <div class="section-head"><span class="num">06</span><h2>Technical Skills</h2></div>
   <div class="skills-grid">
     <div class="skill-block">
@@ -622,11 +752,12 @@
   </div>
 </section>
 
-<section id="awards">
+<section id="awards" class="reveal">
   <div class="section-head"><span class="num">07</span><h2>Awards &amp; Training</h2></div>
   <ul class="list-simple">
     <li><span>Best Paper Award &mdash; International Conference on Sustainable Waste Management (ICSWM)</span><span class="badge-year">2024</span></li>
     <li><span>University Merit Scholarship &mdash; Khulna University of Engineering &amp; Technology</span><span class="badge-year">2017–2023</span></li>
+    <li><span>Statistical Data Analysis and Visualization with R Programming &mdash; Research Tech Hub</span><span class="badge-year">Sep 2024</span></li>
     <li><span>OpenLCA Basic Public Training</span><span class="badge-year">Sep 2024</span></li>
     <li><span>Fundamentals of UAV Data Collection</span><span class="badge-year">Mar 2023</span></li>
     <li><span>IBM SPSS &amp; Excel Training</span><span class="badge-year">Oct 2019</span></li>
@@ -644,9 +775,9 @@
   </div>
 </section>
 
-<section id="contact">
+<section id="contact" class="reveal">
   <div class="contact-box">
-    <div class="section-head"><span class="num" style="color:var(--amber);">08</span><h2>Contact</h2></div>
+    <div class="section-head"><span class="num">08</span><h2>Contact</h2></div>
     <div class="contact-row">
       <span class="label">Email</span>
       <a href="mailto:nushratnureenzana@gmail.com">nushratnureenzana@gmail.com</a>
@@ -671,6 +802,8 @@
   &copy; 2026 Nushrat Nureen. Built with care for research and resilience.
 </footer>
 
+<button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
+
 <script>
   const themeToggle = document.getElementById('themeToggle');
   const root = document.documentElement;
@@ -686,6 +819,55 @@
   const navLinks = document.getElementById('navLinks');
   navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // Scroll progress bar + back-to-top button
+  const scrollProgress = document.getElementById('scrollProgress');
+  const backToTop = document.getElementById('backToTop');
+  function onScroll(){
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    scrollProgress.style.width = pct + '%';
+    backToTop.classList.toggle('visible', scrollTop > 600);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Reveal-on-scroll animation
+  const revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+    // Safety net: never leave content permanently hidden (slow devices, print, odd viewports)
+    setTimeout(() => revealEls.forEach(el => el.classList.add('in-view')), 2500);
+  } else {
+    revealEls.forEach(el => el.classList.add('in-view'));
+  }
+
+  // Scrollspy: highlight the active nav link as sections pass
+  const navAnchors = Array.from(navLinks.querySelectorAll('a[href^="#"]'));
+  const spySections = navAnchors
+    .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+    .filter(Boolean);
+  if('IntersectionObserver' in window && spySections.length){
+    const spyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const id = entry.target.getAttribute('id');
+          navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    spySections.forEach(sec => spyObserver.observe(sec));
+  }
 </script>
 
 </body>
