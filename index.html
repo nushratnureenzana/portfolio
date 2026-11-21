@@ -203,8 +203,9 @@
   .list-simple li:last-child{border-bottom:none;}
   .list-simple .badge-year{color:var(--ink-soft); font-size:.85rem; white-space:nowrap;}
 
+  .award-certs{display:flex; flex-wrap:wrap; gap:16px; margin-top:20px;}
   .award-cert{
-    display:inline-block; max-width:340px; margin-top:20px;
+    display:inline-block; max-width:340px;
     border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
   }
   .award-cert img{width:100%; display:block;}
@@ -615,10 +616,16 @@
     <li><span>IBM SPSS &amp; Excel Training</span><span class="badge-year">Oct 2019</span></li>
     <li><span>GIS &amp; Remote Sensing Workshop</span><span class="badge-year">Mar 2019</span></li>
   </ul>
-  <a class="award-cert" href="img/icswm-2024-best-paper-certificate.webp" target="_blank">
-    <img src="img/icswm-2024-best-paper-certificate.webp" alt="ICSWM 2024 Excellence Award certificate for Best Paper Presentation, awarded to Nushrat Nureen">
-    <span class="award-cert-caption">ICSWM 2024 &mdash; Best Paper Award certificate</span>
-  </a>
+  <div class="award-certs">
+    <a class="award-cert" href="img/icswm-2024-best-paper-certificate.webp" target="_blank">
+      <img src="img/icswm-2024-best-paper-certificate.webp" alt="ICSWM 2024 Excellence Award certificate for Best Paper Presentation, awarded to Nushrat Nureen">
+      <span class="award-cert-caption">ICSWM 2024 &mdash; Best Paper Award certificate</span>
+    </a>
+    <a class="award-cert" href="img/uav-training-certificate.jpg" target="_blank">
+      <img src="img/uav-training-certificate.jpg" alt="Certificate of Appreciation for completing Fundamentals of UAV Data Collection and Aerial Image Processing training, awarded to Nushrat Nureen">
+      <span class="award-cert-caption">Fundamentals of UAV Data Collection &mdash; training certificate</span>
+    </a>
+  </div>
 </section>
 
 <section id="contact">
