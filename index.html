@@ -114,6 +114,13 @@
   .field-strip-grid a:hover img{transform:scale(1.04);}
   .field-caption{margin-top:10px; font-size:.82rem; color:var(--ink-soft); text-align:right;}
 
+  .thesis-gallery{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-top:14px;
+  }
+  .thesis-gallery a{display:block; overflow:hidden; border-radius:var(--radius); border:1px solid var(--line);}
+  .thesis-gallery img{width:100%; height:110px; object-fit:cover; transition:transform .5s ease;}
+  .thesis-gallery a:hover img{transform:scale(1.06);}
+
   .interests-section{background:var(--surface-alt); border:1px solid var(--line); border-radius:var(--radius); margin-top:44px;}
   .interests-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;}
   .interest-card{
@@ -221,6 +228,7 @@
     .hero-photo-wrap{aspect-ratio:16/10; max-width:320px;}
     .field-strip-grid{grid-template-columns:1fr 1fr;}
     .field-strip-grid a:first-child{grid-column:1/-1;}
+    .thesis-gallery{grid-template-columns:1fr 1fr;}
     .interests-grid{grid-template-columns:1fr;}
     .entry{grid-template-columns:1fr;}
     .entry-date{order:2;}
@@ -350,6 +358,12 @@
       <p style="margin:0; color:var(--ink-soft); font-size:.93rem;">
         Thesis: <em>Prevailing Service Facilities and Its Planning in Khulna City's Slum Area.</em>
       </p>
+      <div class="thesis-gallery">
+        <a href="img/khulna-slum-aerial-1.jpg" target="_blank"><img src="img/khulna-slum-aerial-1.jpg" alt="Aerial view of a Khulna slum settlement along the highway"></a>
+        <a href="img/khulna-slum-aerial-2.jpg" target="_blank"><img src="img/khulna-slum-aerial-2.jpg" alt="Aerial view of dense slum housing and ponds in Khulna"></a>
+        <a href="img/khulna-slum-aerial-3.jpg" target="_blank"><img src="img/khulna-slum-aerial-3.jpg" alt="Aerial view of slum housing bordering the river in Khulna"></a>
+        <a href="img/khulna-slum-aerial-4.jpg" target="_blank"><img src="img/khulna-slum-aerial-4.jpg" alt="Aerial view of slum housing near the railway and ponds in Khulna"></a>
+      </div>
     </div>
   </div>
 </section>
