@@ -288,6 +288,15 @@
   }
 
   .skills-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .logo-showcase-head{font-size:.85rem; color:var(--teal); font-weight:600; margin:36px 0 12px;}
+  .logo-showcase{display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;}
+  .logo-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden; display:block; transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .logo-card:hover{transform:translateY(-3px); box-shadow:0 14px 28px -16px rgba(12,10,8,.35);}
+  .logo-card img{width:100%; height:160px; object-fit:contain; background:#fff;}
+  .logo-card-caption{display:block; padding:10px 14px; font-size:.8rem; color:var(--ink-soft); border-top:1px solid var(--line);}
   .skill-block h3{font-size:.85rem; color:var(--teal); font-weight:600; margin-bottom:8px;}
   .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
   .chip{
@@ -345,6 +354,7 @@
     .project, .project:nth-child(even){grid-template-columns:1fr;}
     .project:nth-child(even) .project-media{order:0;}
     .skills-grid{grid-template-columns:1fr;}
+    .logo-showcase{grid-template-columns:1fr 1fr;}
     .nav-links{
       position:fixed; top:57px; left:0; right:0; background:var(--paper);
       flex-direction:column; align-items:flex-start; padding:16px 28px;
@@ -749,6 +759,22 @@
         <span class="chip">English</span>
       </div>
     </div>
+  </div>
+
+  <h3 class="logo-showcase-head">Selected Illustrator Work</h3>
+  <div class="logo-showcase">
+    <a class="logo-card" href="img/logo-design-bengali-typography.png" target="_blank">
+      <img src="img/logo-design-bengali-typography.png" alt="Bengali typographic calligram logo design">
+      <span class="logo-card-caption">Bengali typography logo</span>
+    </a>
+    <a class="logo-card" href="img/logo-design-cloth-taan.png" target="_blank">
+      <img src="img/logo-design-cloth-taan.png" alt="Cloth & Taan fashion brand logo design">
+      <span class="logo-card-caption">Cloth &amp; Taan &mdash; brand logo</span>
+    </a>
+    <a class="logo-card" href="img/logo-design-karupot.png" target="_blank">
+      <img src="img/logo-design-karupot.png" alt="Karupot brand logo design">
+      <span class="logo-card-caption">Karupot &mdash; brand logo</span>
+    </a>
   </div>
 </section>
 
